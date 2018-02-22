@@ -1,6 +1,6 @@
 require(spdep)
 
-plot_localMoran <- function(x, variable.name, local.moran, weights, sig = 0.05, plot.only.significant = TRUE){
+plot_local_moran <- function(x, variable.name, local.moran, weights, sig = 0.05, plot.only.significant = TRUE){
   if(!inherits(locm, "localmoran"))
     stop("local.moran not an object of class localmoran")
   if(!inherits(weights, "listw"))
