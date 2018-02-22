@@ -1,6 +1,6 @@
 # plot_localmoran.R
 
-Two functions are contained in plot_localmoran.R
+Two functions are contained in plotlocalmoran.R
 
 plot_local_moran, which is modified from https://aledemogr.com/2017/10/16/global-and-local-measures-of-spatial-autocorrelation/
 
