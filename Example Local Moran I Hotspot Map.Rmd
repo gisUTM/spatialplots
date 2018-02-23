@@ -1,0 +1,71 @@
+---
+title: "Local Moran Plot"
+author: "Dr. Adams"
+date: '2018-02-23'
+output: html_document
+---
+
+# Example of Local Moran's I hotspot map in R
+
+This is a demo of using the plot.local.moran() function on Hamilton, ON average house value by census tract in 2016. The data has been modified for an assignment in UTM's GGR376. Do not use the data for research purposes.
+
+### Load libraries and source the functions
+```{r}
+library(rgdal)
+library(spdep)
+library(RColorBrewer) # Not required for the plot.local.moran()
+
+# Load plot.local.moran and sp.remove.na.rows
+source("https://raw.githubusercontent.com/gisUTM/spatialplots/master/plotlocalmoran.R")
+```
+
+
+## Read in GEOJSON of House Values
+```{r}
+hamilton <- readOGR("https://raw.githubusercontent.com/gisUTM/GGR376/master/Lab_1/houseValues.geojson")
+```
+
+View a plot of the house values.
+
+```{r}
+# Colour palette
+col.pal <- brewer.pal(7, name = "BuPu")
+
+spplot(hamilton,
+       "houseValue",
+       col.regions = col.pal, # Use the color palette
+       cuts = 6, # Set the number of classes n (brewer.pa) - 1
+       col = "transparent") # Polygon borders
+```
+
+
+The plot function cannot accept missing data in the value row. These missing data can be handled with arguments in spdep::localmoran(); however, due to the various inputs. It is easier to remove the points or polygons with missing data before creating the spatial weights with sp.remove.na.rows().
+
+```{r}
+# Remove observations with missing values in houseValue
+hamilton <- sp.remove.na.rows(hamilton, "houseValue")
+```
+
+Create a neighbours list.
+
+```{r}
+ham.nb <- poly2nb(hamilton)
+```
+
+Convert neighbours list to spatial weights.
+
+```{r}
+ham.wt <- nb2listw(ham.nb)
+```
+
+# Calculate Local Moran's
+
+```{r}
+ham.lmi <- localmoran(hamilton@data$houseValue, ham.wt)
+```
+
+# Plot Local Moran's I
+```{r}
+plot.local.moran(hamilton, variable.name = "houseValue", weights = ham.wt, local.moran = ham.lmi, legend.location = "topright")
+```
+
