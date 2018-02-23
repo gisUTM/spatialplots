@@ -14,13 +14,13 @@ sig | p value, default is sig = 0.05
 plot.only.significant | Plot only the statistically significant clusters, default is TRUE
 legend.location | A single keyword "bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" and "center".
 
-You can try out the tool with the following code:
+Example code in an [Rmd file](https://github.com/gisUTM/spatialplots/blob/master/Example%20Local%20Moran%20I%20Hotspot%20Map.Rmd)
 
+## Example Plot
 
+![](localMoranPlot.png)
 
 This code is modified from [https://aledemogr.com/2017/10/16/global-and-local-measures-of-spatial-autocorrelation/](https://aledemogr.com/2017/10/16/global-and-local-measures-of-spatial-autocorrelation/)
-
-
 
 ## sp.remove.na.rows()
 
