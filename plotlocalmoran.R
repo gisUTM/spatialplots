@@ -21,7 +21,7 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
     weights <- subset(weights, subVec, zero.policy = zero.policy)
     
     # Subset localmoran
-    local.moran <- local.moran[subset,]
+    local.moran <- local.moran[subVec,]
     
     # Subset Polygons
     origPoly <- x
