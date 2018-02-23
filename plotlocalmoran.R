@@ -24,6 +24,7 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
     local.moran <- local.moran[subset,]
     
     # Subset Polygons
+    origPoly <- x
     x <- subset(x, subVec)
   }
   
@@ -80,7 +81,7 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
   colors1 <- colors
   for (i in 1:n){
     if ( !(is.na (locm.dt[i])) )  {
-      if (locm.dt[i]==0) colors1[i] <- "grey97"
+      if (locm.dt[i]==0) colors1[i] <- "grey78"
     }
   }
   
@@ -96,13 +97,15 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
   lightblue0 <- which(colors2=="lightblue 0")
   pink0 <- which(colors2=="pink 0")
   lb <- 6
-  labels=c("High-High", "High-Low", "Low-High", "Low-Low", "Not Significant")
+  labels=c("High-High", "High-Low", "Low-High", "Low-Low", "Not Significant", "Missing Data")
   # plot the map
+  # Plot out the full set of polygons (missing data will not be overlaid)
+  plot(origPoly, col = "black")
   if (plot.only.significant == TRUE){
-    plot(x, col=colors1,border=T, lwd=0.2) 
+    plot(x, col=colors1,border=T, lwd=0.2, add = TRUE) 
   }else{
-    plot(x, col=colors,border=T)
+    plot(x, col=colors,border=T, add = TRUE)
   }
-  legend(legend.location, legend = labels, fill = c("red", "pink", "lightblue", "blue", "grey97"), bty = "n")
+  legend(legend.location, legend = labels, fill = c("red", "pink", "lightblue", "blue", "grey78", "black"), bty = "n")
   
 }
