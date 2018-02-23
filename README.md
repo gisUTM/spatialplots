@@ -22,8 +22,3 @@ Example code in an [Rmd file](https://github.com/gisUTM/spatialplots/blob/master
 
 This code is modified from [https://aledemogr.com/2017/10/16/global-and-local-measures-of-spatial-autocorrelation/](https://aledemogr.com/2017/10/16/global-and-local-measures-of-spatial-autocorrelation/)
 
-## sp.remove.na.rows()
-
-The second is a helper function for removing rows in a spatailpolygonsdataframe or spatialpointsdataframe where NAs occur. You specify the column name to check for NAs.
-
-This function was modified from Jeffery Evans Answer: https://gis.stackexchange.com/questions/89512/r-dealing-with-missing-data-in-spatialpolygondataframes-for-moran-test
