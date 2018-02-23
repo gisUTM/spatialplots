@@ -1,7 +1,7 @@
 require(spdep)
 
-plot_local_moran <- function(x, variable.name, local.moran, weights, sig = 0.05, plot.only.significant = TRUE){
-  if(!inherits(locm, "localmoran"))
+plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05, plot.only.significant = TRUE, legend.location = "bottomleft"){
+  if(!inherits(local.moran, "localmoran"))
     stop("local.moran not an object of class localmoran")
   if(!inherits(weights, "listw"))
     stop("weight not a listw")
@@ -87,7 +87,7 @@ plot_local_moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
   }else{
     plot(x, col=colors,border=T)
   }
-  legend("bottomleft", legend = labels, fill = c("red", "pink", "lightblue", "blue"), bty = "n")
+  legend(legend.location, legend = labels, fill = c("red", "pink", "lightblue", "blue", "grey97"), bty = "n")
   
 }
 
@@ -95,7 +95,7 @@ plot_local_moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
 sp.remove.na.rows <- function(x, variable) {
   if (!inherits(x, "SpatialPointsDataFrame") & !inherits(x, "SpatialPolygonsDataFrame")) 
     stop("MUST BE sp SpatialPointsDataFrame OR SpatialPolygonsDataFrame CLASS OBJECT") 
-  na.index <- unique(as.data.frame(which(is.na(x@data[[variable]]),arr.ind=TRUE))[,margin])
+  na.index <- unique(as.data.frame(which(is.na(x@data[[variable]]),arr.ind=TRUE))[,1])
   cat("DELETING ROWS: ", na.index, "\n") 
   return( x[-na.index,]  )
 
