@@ -1,15 +1,31 @@
 require(spdep)
 
-plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05, plot.only.significant = TRUE, legend.location = "bottomleft"){
+plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05, plot.only.significant = TRUE, legend.location = "bottomleft", zero.policy = NULL){
   if(!inherits(local.moran, "localmoran"))
     stop("local.moran not an object of class localmoran")
   if(!inherits(weights, "listw"))
     stop("weight not a listw")
   if (!inherits(x, "SpatialPointsDataFrame") & !inherits(x, "SpatialPolygonsDataFrame")) 
     stop("MUST be sp SpatialPointsDataFrame OR SpatialPolygonsDataFrame CLASS OBJECT")
-  if(sum(is.na(x[[variable.name]]))> 0)
-    stop("x contains NA in variable.name. See function sp.remove.na.rows()")
+
   
+  # Check if local.moran subsetted missing data
+  #x <- na.action(local.moran)
+  na.act <- na.action(LISA)
+  
+  if (!is.null(na.act)) {
+    # Rows to drop in weight matrix (weights)
+    subVec <- !(1:length(weights$neighbours) %in% na.act)
+    
+    # Subset weights
+    weights <- subset(weights, subVec, zero.policy = zero.policy)
+    
+    # Subset localmoran
+    local.moran <- local.moran[subset,]
+    
+    # Subset Polygons
+    x <- subset(x, subVec)
+  }
   
   # Get length of x
   n <- length(x)
@@ -89,14 +105,4 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
   }
   legend(legend.location, legend = labels, fill = c("red", "pink", "lightblue", "blue", "grey97"), bty = "n")
   
-}
-
-
-sp.remove.na.rows <- function(x, variable) {
-  if (!inherits(x, "SpatialPointsDataFrame") & !inherits(x, "SpatialPolygonsDataFrame")) 
-    stop("MUST BE sp SpatialPointsDataFrame OR SpatialPolygonsDataFrame CLASS OBJECT") 
-  na.index <- unique(as.data.frame(which(is.na(x@data[[variable]]),arr.ind=TRUE))[,1])
-  cat("DELETING ROWS: ", na.index, "\n") 
-  return( x[-na.index,]  )
-
 }
