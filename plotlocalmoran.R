@@ -81,7 +81,9 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
   colors1 <- colors
   for (i in 1:n){
     if ( !(is.na (locm.dt[i])) )  {
+
       if (locm.dt[i]==0) colors1[i] <- "grey78"
+
     }
   }
   
@@ -107,5 +109,6 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
     plot(x, col=colors,border=T, add = TRUE)
   }
   legend(legend.location, legend = labels, fill = c("red", "pink", "lightblue", "blue", "grey78", "black"), bty = "n")
+
   
 }
