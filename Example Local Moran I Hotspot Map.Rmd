@@ -15,7 +15,7 @@ library(rgdal)
 library(spdep)
 library(RColorBrewer) # Not required for the plot.local.moran()
 
-# Load plot.local.moran and sp.remove.na.rows
+# Load plot.local.moran function
 source("https://raw.githubusercontent.com/gisUTM/spatialplots/master/plotlocalmoran.R")
 ```
 
@@ -36,14 +36,6 @@ spplot(hamilton,
        col.regions = col.pal, # Use the color palette
        cuts = 6, # Set the number of classes n (brewer.pa) - 1
        col = "transparent") # Polygon borders
-```
-
-
-The plot function cannot accept missing data in the value row. These missing data can be handled with arguments in spdep::localmoran(); however, due to the various inputs. It is easier to remove the points or polygons with missing data before creating the spatial weights with sp.remove.na.rows().
-
-```{r}
-# Remove observations with missing values in houseValue
-hamilton <- sp.remove.na.rows(hamilton, "houseValue")
 ```
 
 Create a neighbours list.
