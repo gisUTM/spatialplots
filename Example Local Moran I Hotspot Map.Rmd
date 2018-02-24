@@ -53,7 +53,7 @@ ham.wt <- nb2listw(ham.nb)
 # Calculate Local Moran's
 
 ```{r}
-ham.lmi <- localmoran(hamilton@data$houseValue, ham.wt)
+ham.lmi <- localmoran(hamilton@data$houseValue, ham.wt, na.action = na.exclude)
 ```
 
 # Plot Local Moran's I
