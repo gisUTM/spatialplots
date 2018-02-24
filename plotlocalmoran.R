@@ -11,7 +11,7 @@ plot.local.moran <- function(x, variable.name, local.moran, weights, sig = 0.05,
   
   # Check if local.moran subsetted missing data
   #x <- na.action(local.moran)
-  na.act <- na.action(LISA)
+  na.act <- na.action(local.moran)
   
   if (!is.null(na.act)) {
     # Rows to drop in weight matrix (weights)
